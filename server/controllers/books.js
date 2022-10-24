@@ -54,7 +54,8 @@ export function displayEditPage(req, res, next) {
 export function processEditPage(req, res, next) {
     let id = req.params.id;
 
-    let newBook = booksModel({
+    const newBook = ({
+        _id: req.body.id,
         name:req.body.name,
         author: req.body.author,
         published: req.body.published,
@@ -62,10 +63,11 @@ export function processEditPage(req, res, next) {
         price: req.body.price
     });
     booksModel.updateOne({_id: id }, newBook, (err, Book) => {
-        if (err) {
+        if(err){
             console.error(err);
             res.end(err);
         };
+
         res.redirect('/books/list')
     })
 }
